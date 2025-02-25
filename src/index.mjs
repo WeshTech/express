@@ -37,7 +37,6 @@ app.get('/', (req, res) => {
 
 
 app.get('/api/users', (req, res) => {
-    console.log(req.query);
 
     const { 
         query: {name, value},
@@ -62,7 +61,6 @@ app.get("/api/products", (req, res) => {
 
 
 app.post('/api/users', (req, res) => {
-    console.log(req.body);
     const { body } = req;
     const newUser = { id: mockUsers[mockUsers.length - 1].id + 1, ...body };
     mockUsers.push(newUser);
@@ -71,9 +69,7 @@ app.post('/api/users', (req, res) => {
 
 
 app.get('/api/users/:id', (req, res) => {
-    console.log(req.params);
     const parsedId = parseInt(req.params.id);
-    console.log(parsedId);
 
     if (isNaN(parsedId)) {
         res.status(400).send({msg:"Bad request, Invalid id provided"});
@@ -113,8 +109,11 @@ app.delete("/api/users/:id", (req, res) => {
     const { params: { id } } = req;
     const parsedId = parseInt(id);
     if(isNaN(parsedId)) return res.status(400).send("Bad request");
-    
-})
+    const findUserIndex = mockUsers.findIndex((user) => user.id === parsedId);
+    if ( findUserIndex === -1 ) return res.status(404).send({msg: "User not found!"});
+    mockUsers.splice(findUserIndex, 1);
+    return res.sendStatus(200);
+});
 
 
 app.listen(PORT, () => {
