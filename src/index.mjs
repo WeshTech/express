@@ -1,6 +1,9 @@
 import express from "express";
 
 const app = express();
+
+app.use(express.json());
+
 const  PORT = process.env.PORT || 5000;
 
 
@@ -58,6 +61,15 @@ app.get("/api/products", (req, res) => {
 });
 
 
+app.post('/api/users', (req, res) => {
+    console.log(req.body);
+    const { body } = req;
+    const newUser = { id: mockUsers[mockUsers.length - 1].id + 1, ...body };
+    mockUsers.push(newUser);
+    return res.status(201).send(newUser);
+});
+
+
 app.get('/api/users/:id', (req, res) => {
     console.log(req.params);
     const parsedId = parseInt(req.params.id);
@@ -70,7 +82,20 @@ app.get('/api/users/:id', (req, res) => {
     const findUser = mockUsers.find((user) => user.id === parsedId);
     if (!findUser) return res.status(404).send({msg: "Ooops you are not registered on the server"});
     return res.send(findUser);
-})
+});
+
+
+app.put('/api/users/:id', (req, res) => {
+    const { body, params: {id} } = req;
+    const parsedId = parseInt(id);
+    if (isNaN(parsedId)) return response.sendStatus(400);
+
+    const findUserIndex = mockUsers.findIndex((user) => user.id === parsedId)
+    if (findUserIndex === -1) { res.status(404).send({msg: "Who the fuck are you looking for?"}); }
+
+    mockUsers[findUserIndex] = { id: parsedId, ...body };
+    return res.status(200).send(mockUsers[parsedId - 1]);
+});
 
 
 app.listen(PORT, () => {
