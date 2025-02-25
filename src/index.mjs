@@ -98,6 +98,25 @@ app.put('/api/users/:id', (req, res) => {
 });
 
 
+app.patch("/api/users/:id", (req, res) => {
+    const { body, params: { id } } = req;
+    const parsedId = parseInt(id);
+    if (isNaN(parsedId)) res.status(400).send("Bad request");
+    const findUserIndex = mockUsers.findIndex((user) => user.id === parsedId);
+    if (findUserIndex === -1) return res.status(404).send({msg: "User not found!"});
+    mockUsers[findUserIndex] = { ...mockUsers[findUserIndex], ...body };
+    return res.status(200).send({msg: "Data patched"});
+});
+
+
+app.delete("/api/users/:id", (req, res) => {
+    const { params: { id } } = req;
+    const parsedId = parseInt(id);
+    if(isNaN(parsedId)) return res.status(400).send("Bad request");
+    
+})
+
+
 app.listen(PORT, () => {
     console.log(`The server has started running on port:: ${PORT} `);
 });
