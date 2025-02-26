@@ -1,0 +1,22 @@
+ export const mockUsers = [
+    { id: 1, username: "Alice", email: "alice@example.com" },
+    { id: 2, username: "Bob", email: "bob@example.com" },
+    { id: 3, username: "Charlie", email: "charlie@example.com" },
+    { id: 4, username: "David", email: "david@example.com" },
+    { id: 5, username: "Eve", email: "eve@example.com" },
+    { id: 6, username: "Frank", email: "frank@example.com" },
+    { id: 7, username: "Grace", email: "grace@example.com" },
+    { id: 8, username: "Hannah", email: "hannah@example.com" },
+    { id: 9, username: "Isaac", email: "isaac@example.com" },
+    { id: 10, username: "Jack", email: "jack@example.com" },
+    { id: 11, username: "Karen", email: "karen@example.com" },
+    { id: 12, username: "Liam", email: "liam@example.com" },
+    { id: 13, username: "Mia", email: "mia@example.com" },
+    { id: 14, username: "Noah", email: "noah@example.com" },
+    { id: 15, username: "Olivia", email: "olivia@example.com" },
+    { id: 16, username: "Paul", email: "paul@example.com" },
+    { id: 17, username: "Quinn", email: "quinn@example.com" },
+    { id: 18, username: "Ryan", email: "ryan@example.com" },
+    { id: 19, username: "Sophia", email: "sophia@example.com" },
+    { id: 20, username: "Thomas", email: "thomas@example.com" }
+]
