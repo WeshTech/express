@@ -1,8 +1,15 @@
 import express from "express";
+import { query, validationResult } from "express-validator";
 
 const app = express();
 
 app.use(express.json());
+const loggingMiddleware = (req, res, next) => {
+    console.log(`${req.method} - ${req.url}`);
+    next();
+}
+
+app.use(loggingMiddleware);
 
 const  PORT = process.env.PORT || 5000;
 
@@ -36,8 +43,9 @@ app.get('/', (req, res) => {
 });
 
 
-app.get('/api/users', (req, res) => {
-
+app.get('/api/users', query('name').isString().notEmpty().isLength({min: 3, max: 8}).withMessage("min of 3 max of 8").isEmail().withMessage("Please provide a valid email!"), (req, res) => {
+    const result = validationResult(req);
+    console.log(result);
     const { 
         query: {name, value},
     } = req;
