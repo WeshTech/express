@@ -3,6 +3,7 @@ import routes from './routes/index.mjs';
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import dotenv from "dotenv";
+import { mockUsers } from "./utils/constants.mjs";
 
 dotenv.config();
 
@@ -33,6 +34,20 @@ app.get('/', (req, res) => {
     req.session.visited = true;
     res.cookie('hello','world', { maxAge: 60000 * 60 * 2, signed: true });
     res.status(201).send("Welcome to express server programming");
+});
+
+
+app.post('/api/auth', (req, res) => {
+    console.log(req.body);
+    const { username, password } = req.body
+    const findUser = mockUsers.find((user) => user.username === username);
+
+    if (!findUser) return res.status(404).send("User not found");
+
+    if (findUser.password !== password) return res.status(401).send("Invalid credentials");
+
+    req.session.user = findUser;
+    return res.status(200).send(findUser);
 });
 
 
