@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { query, validationResult } from "express-validator";
 import { mockUsers } from "../utils/constants.mjs";
+import { User } from '../mongoose/schemas/user';
 
 const router = Router();
 
@@ -58,10 +59,8 @@ router.patch("/api/users/:id", (req, res) => {
 
 
 router.post('/api/users', (req, res) => {
-    const { body } = req;
-    const newUser = { id: mockUsers[mockUsers.length - 1].id + 1, ...body };
-    mockUsers.push(newUser);
-    return res.status(201).send(newUser);
+    const { body } = req.body;
+    console.log(body);
 });
 
 
